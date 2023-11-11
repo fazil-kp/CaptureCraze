@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "303045938877",
+    "project_id": "notefazi-b0310",
+    "storage_bucket": "notefazi-b0310.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:303045938877:android:31064c6f861fb4733431d4",
+        "android_client_info": {
+          "package_name": "com.example.note_fazi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjKrtpqsXVr3VLLliuzCs6juakAOGMHjc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
