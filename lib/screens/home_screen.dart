@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -40,23 +41,40 @@ class HomeScreen extends StatelessWidget {
             height: 20,
           ),
           Expanded(
-            child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-              ),
-              itemCount: noteProvider.notes.length,
-              itemBuilder: (context, index) {
-                final note = noteProvider.notes[index];
-                return noteCard(
-                      () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => NoteReaderScreen(note),
-                      ),
-                    );
-                  },
-                  note,
+            child: StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance.collection("Notes").snapshots(),
+              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (snapshot.hasData) {
+                  noteProvider.setNotes(snapshot.data!.docs);
+                  return GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                    ),
+                    itemCount: noteProvider.notes.length,
+                    itemBuilder: (context, index) {
+                      final note = noteProvider.notes[index];
+                      return noteCard(
+                            () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => NoteReaderScreen(note),
+                            ),
+                          );
+                        },
+                        note,
+                      );
+                    },
+                  );
+                }
+                return Text(
+                  "There's no Notes",
+                  style: GoogleFonts.nunito(color: Colors.white),
                 );
               },
             ),

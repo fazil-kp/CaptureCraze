@@ -15,14 +15,25 @@ Widget noteCard(Function()? onTap, QueryDocumentSnapshot doc) {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(doc["note_title"], style: AppStyle.mainTitle),
-          SizedBox(height: 8),
-          Text(doc["creation_date"], style: AppStyle.dateTitle),
+          Text(
+            doc["note_title"],
+            style: AppStyle.mainTitle,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
           SizedBox(height: 8),
           Text(
-            doc["note_content"],
-            style: AppStyle.mainContent,
-            overflow: TextOverflow.ellipsis,
+            doc["creation_date"],
+            style: AppStyle.dateTitle,
+          ),
+          SizedBox(height: 8),
+          Expanded(
+            child: Text(
+              doc["note_content"],
+              style: AppStyle.mainContent,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 3, // Adjust the number of lines as needed
+            ),
           ),
         ],
       ),
