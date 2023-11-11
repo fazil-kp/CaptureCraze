@@ -1,21 +1,21 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
+import 'package:note_fazi/screens/note_editor.dart';
+import 'package:note_fazi/screens/note_reader.dart';
+
+import '../provider/note_provider.dart';
 import '../style/app_style.dart';
 import '../widgets/note_card.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    final noteProvider = Provider.of<NoteProvider>(context);
+
     return Scaffold(
       backgroundColor: AppStyle.mainColor,
       appBar: AppBar(
@@ -40,31 +40,38 @@ class _HomeScreenState extends State<HomeScreen> {
             height: 20,
           ),
           Expanded(
-            child: StreamBuilder<QuerySnapshot>(
-              stream: FirebaseFirestore.instance.collection("Notes").snapshots(),
-              builder: (context, AsyncSnapshot <QuerySnapshot> snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                if (snapshot.hasData) {
-                  return GridView(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2),
-                    children:
-                      snapshot.data!.docs.map((note) => noteCard(() {}, note)).toList(),
-            
-                  );
-                }
-                return Text(
-                  "ther's no Notes",
-                  style: GoogleFonts.nunito(color: Colors.white),
+            child: GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+              ),
+              itemCount: noteProvider.notes.length,
+              itemBuilder: (context, index) {
+                final note = noteProvider.notes[index];
+                return noteCard(
+                      () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => NoteReaderScreen(note),
+                      ),
+                    );
+                  },
+                  note,
                 );
               },
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => NoteEditorScreen()),
+          );
+        },
+        label: Text("Add Note"),
+        icon: Icon(Icons.add),
       ),
     );
   }
