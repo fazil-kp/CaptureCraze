@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import 'package:note_fazi/screens/note_editor.dart';
-import 'package:note_fazi/screens/note_reader.dart';
+
 
 import '../provider/note_provider.dart';
 import '../style/app_style.dart';
 import '../widgets/note_card.dart';
+import 'note_editor.dart';
+import 'note_reader.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);

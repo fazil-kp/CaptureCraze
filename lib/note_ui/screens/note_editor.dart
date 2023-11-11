@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:note_fazi/style/app_style.dart';
+
 
 import '../provider/note_provider.dart';
+import '../style/app_style.dart';
 
 class NoteEditorScreen extends StatefulWidget {
   const NoteEditorScreen({Key? key}) : super(key: key);
