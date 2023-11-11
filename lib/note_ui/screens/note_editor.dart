@@ -1,10 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-
 import '../provider/note_provider.dart';
 import '../style/app_style.dart';
 
@@ -76,7 +73,7 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
           }).then((value) async {
             print(value.id);
             final querySnapshot =
-            await FirebaseFirestore.instance.collection("Notes").get();
+                await FirebaseFirestore.instance.collection("Notes").get();
             noteProvider.setNotes(querySnapshot.docs);
             Navigator.pop(context);
           }).catchError((error) => print('Failed to add $error'));

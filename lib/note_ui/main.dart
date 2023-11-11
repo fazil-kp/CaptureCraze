@@ -1,9 +1,7 @@
-// main.dart
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:note_fazi/note_ui/provider/note_provider.dart';
 import 'package:note_fazi/note_ui/screens/home_screen.dart';
-
 import 'package:provider/provider.dart';
 
 void main() async {

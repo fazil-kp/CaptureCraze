@@ -2,9 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-
-
-
 import '../provider/note_provider.dart';
 import '../style/app_style.dart';
 import '../widgets/note_card.dart';
@@ -43,7 +40,8 @@ class HomeScreen extends StatelessWidget {
           ),
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
-              stream: FirebaseFirestore.instance.collection("Notes").snapshots(),
+              stream:
+                  FirebaseFirestore.instance.collection("Notes").snapshots(),
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
@@ -60,7 +58,7 @@ class HomeScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final note = noteProvider.notes[index];
                       return noteCard(
-                            () {
+                        () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
